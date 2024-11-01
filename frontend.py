@@ -7,6 +7,11 @@ from io import StringIO
 single_predict_url = "http://127.0.0.1:8000/predict/"
 bulk_predict_url = "http://127.0.0.1:8000/bulk_predict/"
 
+st.set_page_config(
+    page_title="Star Type Predictor",
+    page_icon="https://img.icons8.com/emoji/48/000000/star-emoji.png",  # You can use any online icon URL or a local file path.
+)
+
 # Custom CSS for background
 page_bg_img = '''
 <style>
@@ -220,3 +225,13 @@ elif page == "Bulk Prediction Mode":
                 st.error(f"Error: Unable to get predictions. Status code {response.status_code}")
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
+
+# Add the footer at the end of the script
+footer = """
+<div style='position: fixed; left: 0; bottom: 0; width: 100%; background-color: white; text-align: center; padding: 10px;'>
+    <p style='color: black; margin: 0;'>This project is developed by <b>Spartificial</b> as part of the <b>Machine Learning for Astronomy</b> Training Program</p>
+</div>
+"""
+
+# Inject the footer using markdown
+st.markdown(footer, unsafe_allow_html=True)

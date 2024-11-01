@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import pandas as pd
@@ -60,7 +61,42 @@ def predict_star_type(star: StarDetails):
     # Predict the star type using the pre-trained machine learning pipeline
     y_pred = pipeline.predict(test_df)[0]
 
+    # Probability output
+    y_pred_prob = pipeline.predict_proba(test_df)[0].max()
+
     # Return the prediction as a JSON object
     return {
-        "predicted_type": y_pred
+        "predicted_type": y_pred,
+        "predicted_probability": y_pred_prob
     }
+
+@app.post("/bulk_predict/")
+async def bulk_predict(file: UploadFile = File(...)):
+    """
+    Endpoint for bulk prediction of star types based on input CSV file.
+    """
+    # Read the uploaded file as a pandas DataFrame
+    input_df = pd.read_csv(file.file)
+
+    # Define the required columns in the expected order
+    required_columns = ['Temperature (K)', 'Luminosity(L/Lo)', 'Radius(R/Ro)', 'Absolute magnitude(Mv)']
+    
+    # Check that the CSV has all the required columns
+    if not all(col in input_df.columns for col in required_columns):
+        return {"error": "CSV must contain columns: Temperature (K), Luminosity(L/Lo), Radius(R/Ro), Absolute magnitude(Mv)"}
+
+    # Reorder columns to ensure they match the expected order
+    input_df = input_df[required_columns]
+
+    # Run predictions on the reordered DataFrame
+    predictions = pipeline.predict(input_df)
+
+    # Add predictions to the DataFrame as a new column
+    input_df['Predicted Type'] = predictions
+
+    # Save the resulting DataFrame with predictions to a new CSV file
+    output_file_path = "predicted_star_types.csv"
+    input_df.to_csv(output_file_path, index=False)
+
+    # Return the CSV file as a downloadable response
+    return FileResponse(path=output_file_path, media_type='text/csv', filename="predicted_star_types.csv")

@@ -4,8 +4,8 @@ import pandas as pd
 from io import StringIO
 
 # API endpoints
-single_predict_url = "http://127.0.0.1:8000/predict/"
-bulk_predict_url = "http://127.0.0.1:8000/bulk_predict/"
+single_predict_url = "https://project-2-e2kj.onrender.com/predict/"
+bulk_predict_url = "https://project-2-e2kj.onrender.com/bulk_predict/"
 
 st.set_page_config(
     page_title="Star Type Predictor",

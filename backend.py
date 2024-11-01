@@ -10,7 +10,7 @@ from joblib import load
 app = FastAPI()
 
 # Specify your Streamlit app's URL (replace with the actual URL where your Streamlit app is hosted)
-streamlit_app_origin = "http://localhost:8501"  # Update this with your Streamlit app URL
+streamlit_app_origin = "https://startypepredictor.streamlit.app/"  # Update this with your Streamlit app URL
 
 # Add CORS middleware to allow only requests from your Streamlit app and allow all methods and headers
 app.add_middleware(

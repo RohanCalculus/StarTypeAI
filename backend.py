@@ -1,8 +1,9 @@
 from fastapi import FastAPI, UploadFile, File
-from fastapi.responses import FileResponse
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import pandas as pd
+from io import StringIO
 from joblib import load
 
 # Initialize FastAPI app
@@ -94,9 +95,10 @@ async def bulk_predict(file: UploadFile = File(...)):
     # Add predictions to the DataFrame as a new column
     input_df['Predicted Type'] = predictions
 
-    # Save the resulting DataFrame with predictions to a new CSV file
-    output_file_path = "predicted_star_types.csv"
-    input_df.to_csv(output_file_path, index=False)
+    # Create a CSV from the DataFrame without saving it to a file
+    output_csv = StringIO()
+    input_df.to_csv(output_csv, index=False)
+    output_csv.seek(0)  # Move to the beginning of the StringIO buffer
 
-    # Return the CSV file as a downloadable response
-    return FileResponse(path=output_file_path, media_type='text/csv', filename="predicted_star_types.csv")
+    # Return the CSV file as a streaming response
+    return StreamingResponse(output_csv, media_type='text/csv', headers={"Content-Disposition": "inline; filename=predicted_star_types.csv"})

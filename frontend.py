@@ -39,80 +39,51 @@ page = st.selectbox("Choose a page:", ["Introduction", "Single Prediction Mode",
 
 # Display Introduction Page if selected
 if page == "Introduction":
-
     # Introduction section
     with st.container():
-        st.markdown("""
-        <div style='background-color: rgba(255, 235, 235, 0.8); padding: 20px; border-radius: 10px;'>
+        st.markdown("""<div style='background-color: rgba(255, 235, 235, 0.8); padding: 20px; border-radius: 10px;'>
             <h3 style='color: maroon;'>Introduction to Project</h3>
             <p style='color:black;'><b>This web application is designed to help you predict the type of stars based on their physical parameters. Using machine learning models, we analyze key attributes of stars, such as <u>temperature</u>, <u>luminosity</u>, <u>radius</u>, and <u>absolute magnitude</u>, to classify them into different types.</b></p>
-        </div>
-        """, unsafe_allow_html=True)
+        </div>""", unsafe_allow_html=True)
 
     st.text(" ")
 
     # Importance section
     with st.container():
-        st.markdown("""
-        <div style='background-color: rgba(230, 230, 250, 0.8); padding: 20px; border-radius: 10px;'>
+        st.markdown("""<div style='background-color: rgba(230, 230, 250, 0.8); padding: 20px; border-radius: 10px;'>
             <h3 style='color: darkblue;'>How to Use This Web Application?</h3>
             <ul style='font-size: 16px; color:black;'>
-                <li>
-                    <strong>Select either <u>Single Prediction Mode</u> or <u>Bulk Prediction Mode</u> from the dropdown.
-                </li>
-                <li>
-                    <strong>Single Prediction can predict the type of a single star based on its properties.
-                </li>
-                <li>
-                    <strong>Bulk Prediction can predict the type of multiple stars based on its properties in the csv file.
-                </li>
-                <li>
-                    <strong>Respective page shall guide you more about how to use it.
-                </li>
+                <li><strong>Select either <u>Single Prediction Mode</u> or <u>Bulk Prediction Mode</u> from the dropdown.</strong></li>
+                <li><strong>Single Prediction can predict the type of a single star based on its properties.</strong></li>
+                <li><strong>Bulk Prediction can predict the type of multiple stars based on its properties in the csv file.</strong></li>
+                <li><strong>Respective page shall guide you more about how to use it.</strong></li>
             </ul>
-        </div>
-        """, unsafe_allow_html=True)
-
+        </div>""", unsafe_allow_html=True)
 
     st.text(" ")
 
-
     # Call to action section
     with st.container():
-        st.markdown("""
-        <div style='background-color: rgba(200, 170, 200, 0.8); padding: 20px; border-radius: 10px;'>
+        st.markdown("""<div style='background-color: rgba(200, 170, 200, 0.8); padding: 20px; border-radius: 10px;'>
             <h3 style='color: rgba(200, 20, 6, 1);'>Get Started!</h3>
             <p style='color:black;'><b>Choose either the Single or Bulk Prediction mode from the menu to start exploring the stars!</b></p>
-        </div>
-        """, unsafe_allow_html=True)
+        </div>""", unsafe_allow_html=True)
 
 # Display Single Prediction Page if selected
 elif page == "Single Prediction Mode":
-
     # Information section with black background and white text
     with st.container():
-        st.markdown(
-            """
-            <div style='background-color: rgba(255, 205, 255, 0.8); padding: 20px; border-radius: 10px;'>
-                <h3 style='color: maroon;'>Single Star Type Predictor Mode:</h3>
-                <ul style='font-size: 16px; color: black;'>
-                    <li>
-                        <strong>Provide properties of the star to predict its type!
-                    </li>
-                    <li>
-                        <strong>The default values are for the Sun. You can modify these to analyze other stars.
-                    </li>
-                    <li>
-                        <strong>Click the Predict button to get the predicted star type.
-                    </li>
-                    <li>
-                        <strong>Green (good), Yellow (ok), and Red (bad) status shows the confidence level of the model.
-                    </li>
-                </ul>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+        st.markdown("""
+        <div style='background-color: rgba(255, 205, 255, 0.8); padding: 20px; border-radius: 10px;'>
+            <h3 style='color: maroon;'>Single Star Type Predictor Mode:</h3>
+            <ul style='font-size: 16px; color: black;'>
+                <li><strong>Provide properties of the star to predict its type!</strong></li>
+                <li><strong>The default values are for the Sun. You can modify these to analyze other stars.</strong></li>
+                <li><strong>Click the Predict button to get the predicted star type.</strong></li>
+                <li><strong>Green (good), Yellow (ok), and Red (bad) status shows the confidence level of the model.</strong></li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
     st.text("")  # Space between elements
 
@@ -134,7 +105,8 @@ elif page == "Single Prediction Mode":
 
         # Send a POST request to the FastAPI backend
         try:
-            response = requests.post(single_predict_url, json=payload)
+            with st.spinner('Making prediction...'):
+                response = requests.post(single_predict_url, json=payload)
 
             # Check if the request was successful
             if response.status_code == 200:
@@ -165,16 +137,13 @@ elif page == "Single Prediction Mode":
                         """, 
                         unsafe_allow_html=True
                     )
-                
             else:
                 st.error(f"Error: Unable to get prediction. Status code {response.status_code}")
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
 
-
 # Display Bulk Prediction Page if selected
 elif page == "Bulk Prediction Mode":
-    
     # Container with instructions in chocolate color and 0.8 opacity
     with st.container():
         st.markdown(
@@ -203,17 +172,35 @@ elif page == "Bulk Prediction Mode":
 
     st.text(" ")
 
+    # Container for downloading example dataset
+    with st.container():
+        st.markdown(
+            """
+            <div style='background-color: rgba(255, 230, 153, 0.8); padding: 20px; border-radius: 10px; color:black;'>
+                <h4 style='color: maroon;'>Sample Dataset</h4>
+                <p style='color: black;'><b>In case you don't have the dataset, you can download this sample dataset and try this service.</b></p>
+                <a href="https://drive.google.com/uc?id=1-q0J3TAJdz5n1mth6Ihtmpc3jez_FT4I" download>
+                    <button style='background-color: black; color: white; border: none; padding: 10px; border-radius: 5px;'>Download Dataset</button>
+                </a>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    st.text(" ")
+
     # File uploader for CSV file
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
     # Automatically trigger bulk prediction when a file is uploaded
     if uploaded_file is not None:
         try:
-            # Send the CSV file to the FastAPI bulk_predict endpoint
-            response = requests.post(
-                bulk_predict_url,
-                files={"file": uploaded_file.getvalue()}
-            )
+            with st.spinner('Processing file for predictions...'):
+                # Send the CSV file to the FastAPI bulk_predict endpoint
+                response = requests.post(
+                    bulk_predict_url,
+                    files={"file": uploaded_file.getvalue()}
+                )
 
             # Check if the request was successful
             if response.status_code == 200:

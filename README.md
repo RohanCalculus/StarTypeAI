@@ -3,7 +3,7 @@ This [web-application](https://startypepredictor.streamlit.app/) allows you to d
 1. Predict type of a single star using single prediction mode.
 2. Predict type of multiple stars using bulk prediction mode.
 
-<img src="final-video.gif" alt="Web App GIF" width=90%>
+<img src="media/final-video.gif" alt="Web App GIF" width=90%>
 
 ## ⚙️ How to Set Up This Project in Your System
 1. Clone this repository using the web URL given below or download the ZIP file.

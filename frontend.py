@@ -81,7 +81,7 @@ if page == "Introduction":
         st.markdown(
             """
             <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
-                <h3 style='color: olive;'>Important Note</h3>
+                <h3 style='color: darkgreen;'>Important Note</h3>
                 <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
             </div>
             """, 

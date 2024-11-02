@@ -58,7 +58,7 @@ if page == "Introduction":
             <h3 style='color: darkblue;'>How to Use This Web Application?</h3>
             <ul style='font-size: 16px; color:black;'>
                 <li>
-                    <strong>Select either <u>Single Prediction Mode</u> or <u>Bulk Prediction Mode</u> from the dropdown.
+                    <strong>Select either Single Prediction Mode or Bulk Prediction Mode from the dropdown.
                 </li>
                 <li>
                     <strong>Single Prediction can predict the type of a single star based on its properties.
@@ -76,15 +76,30 @@ if page == "Introduction":
 
     st.text(" ")
 
+    # Note
+    with st.container():
+        st.markdown(
+            """
+            <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
+                <h3 style='color: olive;'>Important Note</h3>
+                <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+
+    st.text(" ")
 
     # Call to action section
     with st.container():
         st.markdown("""
-        <div style='background-color: rgba(200, 170, 200, 0.8); padding: 20px; border-radius: 10px;'>
-            <h3 style='color: rgba(200, 20, 6, 1);'>Get Started!</h3>
+        <div style='background-color: rgba(250, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
+            <h3 style='color: purple;'>Get Started...</h3>
             <p style='color:black;'><b>Choose either the Single or Bulk Prediction mode from the menu to start exploring the stars!</b></p>
         </div>
         """, unsafe_allow_html=True)
+
+
 
 # Display Single Prediction Page if selected
 elif page == "Single Prediction Mode":
@@ -114,19 +129,6 @@ elif page == "Single Prediction Mode":
             unsafe_allow_html=True
         )
 
-    st.text("")  # Space between elements
-
-    # Information section with black background and white text
-    with st.container():
-        st.markdown(
-            """
-            <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
-                <h3 style='color: olive;'>Important Note</h3>
-                <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
 
     st.text(" ")
 
@@ -234,19 +236,7 @@ elif page == "Bulk Prediction Mode":
 
     st.text(" ")
 
-    # Information section with black background and white text
-    with st.container():
-        st.markdown(
-            """
-            <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
-                <h3 style='color: olive;'>Important Note</h3>
-                <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
 
-    st.text(" ")
 
     # File uploader for CSV file
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
@@ -264,7 +254,7 @@ elif page == "Bulk Prediction Mode":
             if response.status_code == 200:
                 # Convert response to a DataFrame and display results
                 output_df = pd.read_csv(StringIO(response.content.decode('utf-8')))
-                st.markdown("<h4 style='color:violet;'>Predicted Results:-</h4>", unsafe_allow_html=True)
+                st.markdown("<h4 style='color:red;'>Predicted Results:-</h4>", unsafe_allow_html=True)
                 st.dataframe(output_df)
             else:
                 st.error(f"Error: Unable to get predictions. Status code {response.status_code}")

@@ -116,6 +116,20 @@ elif page == "Single Prediction Mode":
 
     st.text("")  # Space between elements
 
+    # Information section with black background and white text
+    with st.container():
+        st.markdown(
+            """
+            <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
+                <h3 style='color: olive;'>Important Note</h3>
+                <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+
+    st.text(" ")
+
     # Input fields for user to enter star details
     temperature = st.number_input("Temperature (K):-", min_value=0, step=1, value=5770)
     luminosity = st.number_input("Luminosity wrt Sun (L/Lo):-", min_value=0.0, step=0.01, value=1.0)
@@ -179,8 +193,8 @@ elif page == "Bulk Prediction Mode":
     with st.container():
         st.markdown(
             """
-            <div style='background-color: rgba(189, 252, 201, 0.8); padding: 20px; border-radius: 10px; color:black;'>
-                <h3 style='color: darkgreen;'>Multiple Star Type Predictor Mode</h3>
+            <div style='background-color: rgba(200, 170, 220, 0.8); padding: 20px; border-radius: 10px; color:black;'>
+                <h3 style='color: purple;'>Multiple Star Type Predictor Mode</h3>
                 <p style='color: black;'><b>Upload a CSV file with the following features:</b></p> 
                     <li>
                         <strong>Temperature (K)</strong>
@@ -208,13 +222,27 @@ elif page == "Bulk Prediction Mode":
         st.markdown(
             """
             <div style='background-color: rgba(255, 230, 153, 0.8); padding: 20px; border-radius: 10px; color:black;'>
-                <h4 style='color: maroon;'>Sample Dataset</h4>
+                <h4 style='color: darkred;'>Sample Dataset</h4>
                 <p style='color: black;'><b>In case you don't have the dataset, you can download this sample dataset and try this service.</b></p>
                 <a href="https://drive.google.com/uc?id=1-q0J3TAJdz5n1mth6Ihtmpc3jez_FT4I" download>
                     <button style='background-color: black; color: white; border: none; padding: 10px; border-radius: 5px;'>Download Dataset</button>
                 </a>
             </div>
             """,
+            unsafe_allow_html=True
+        )
+
+    st.text(" ")
+
+    # Information section with black background and white text
+    with st.container():
+        st.markdown(
+            """
+            <div style='background-color: rgba(230, 250, 250, 0.8); padding: 20px; border-radius: 10px;'>
+                <h3 style='color: olive;'>Important Note</h3>
+                <p style='color:black;'><b>If the app was idle for more than 15 minutes, you might face the <a href='https://en.wikipedia.org/wiki/Cold_start_(computing)#:~:text=Cold%20start%20in%20computing%20refers,cache%20or%20starting%20up%20subsystems.'>cold start issue.</a></b></p>
+            </div>
+            """, 
             unsafe_allow_html=True
         )
 

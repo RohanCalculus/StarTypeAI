@@ -56,9 +56,8 @@ This <a href="https://startypepredictor.streamlit.app/" target="_blank">web appl
 2. **Streamlit** - To build and host the frontend of the web application
 3. **Render** - To host the backend API built using FastAPI
 4. **Scikit-Learn** - To build the dataset pipeline, train the model, and evaluate it
-5. **NumPy** - To create the synthetic dataset for training, validation, testing, and the web application
-6. **Matplotlib** - To visualize the cost vs iterations and in the web application to visualize the regression line
-7. **Pandas** - To read CSV files, create the dataframe, and save dataframes back to CSV
+5. **Matplotlib** - To visualize the cost vs iterations and in the web application to visualize the regression line
+6. **Pandas** - To read CSV files, create the dataframe, and save dataframes back to CSV
 
 ## 💖 Acknowledgments
 - Special thanks to the authors of the libraries used in this project.

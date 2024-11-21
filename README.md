@@ -63,4 +63,4 @@ This <a href="https://startypepredictor.streamlit.app/" target="_blank">web appl
 - Special thanks to the authors of the libraries used in this project.
   
 ## 📧 Contact
-For questions or support, please reach out to [Instructors at Spartificial](https://mail.google.com/mail/?view=cm&fs=1&to=instructors@spartificial.com).
+For questions or support, please reach out to me [via email](https://mail.google.com/mail/?view=cm&fs=1&to=rohan.calculus@gmail.com).

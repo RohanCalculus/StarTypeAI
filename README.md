@@ -1,9 +1,9 @@
 # ✨ Predicting Star Type using Artificial Intelligence 
-This <a href="https://startypepredictor.streamlit.app/" target="_blank">web application</a>allows you to do the following:-
+This <a href="https://startype-predictor.streamlit.app/" target="_blank">web application</a>allows you to do the following:-
 1. Predict type of a single star using single prediction mode.
 2. Predict type of multiple stars using bulk prediction mode.
 
-<img src="media/final-video.gif" alt="Web App GIF" width=90%>
+https://github.com/user-attachments/assets/672b48ab-3d2f-40ef-affa-b46950a37a35
 
 ## ⚙️ How to Set Up This Project in Your System
 1. Clone this repository using the web URL given below or download the ZIP file.

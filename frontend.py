@@ -253,7 +253,7 @@ elif page == "Bulk Prediction Mode":
 
     # Automatically trigger bulk prediction when a file is uploaded
     if uploaded_file is not None:
-        with st.spinner('It may take a while if the app was idle for more than 15 mins...'):
+        with st.spinner('Predicting... (It may take a while if the app was idle for more than 15 mins)'):
             try:
                 # Send the CSV file to the FastAPI bulk_predict endpoint
                 response = requests.post(

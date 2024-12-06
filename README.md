@@ -3,7 +3,11 @@ This <a href="https://startype-predictor.streamlit.app/" target="_blank">web app
 1. Predict type of a single star using single prediction mode.
 2. Predict type of multiple stars using bulk prediction mode.
 
+API deployed on render:- https://startype-predictor.onrender.com/docs
+
 https://github.com/user-attachments/assets/672b48ab-3d2f-40ef-affa-b46950a37a35
+
+https://github.com/user-attachments/assets/c833f6d1-7c85-452d-8d2b-3c71defc5df1
 
 ## ⚙️ How to Set Up This Project in Your System
 1. Clone this repository using the web URL given below or download the ZIP file.

@@ -12,6 +12,13 @@ st.set_page_config(
     page_icon="https://img.icons8.com/emoji/48/000000/star-emoji.png",  # You can use any online icon URL or a local file path.
 )
 
+# Footer Text
+footer = """
+<div style='position: fixed; left: 0; bottom: 0; width: 100%; background-color: white; text-align: center; padding: 10px;'>
+    <p style='color: black; margin: 0;'>Made with ❤️ by <b>Rohan</b></p>
+</div>
+"""
+
 # Custom CSS for background
 page_bg_img = '''
 <style>
@@ -103,7 +110,7 @@ if page == "Introduction":
 
 # Display Single Prediction Page if selected
 elif page == "Single Prediction Mode":
-
+    st.markdown(footer, unsafe_allow_html=True)
     # Information section with black background and white text
     with st.container():
         st.markdown(
@@ -140,56 +147,59 @@ elif page == "Single Prediction Mode":
 
     # Trigger prediction when button is clicked
     if st.button("Predict"):
-        # Prepare the payload for the API request
-        payload = {
-            "Temperature (K)": temperature,
-            "Luminosity(L/Lo)": luminosity,
-            "Radius(R/Ro)": radius,
-            "Absolute magnitude(Mv)": magnitude
-        }
+        with st.spinner('It may take a while if the app was idle for more than 15 mins...'):
+            st.markdown(footer, unsafe_allow_html=True)
+            # Prepare the payload for the API request
+            payload = {
+                "Temperature (K)": temperature,
+                "Luminosity(L/Lo)": luminosity,
+                "Radius(R/Ro)": radius,
+                "Absolute magnitude(Mv)": magnitude
+            }
 
-        # Send a POST request to the FastAPI backend
-        try:
-            response = requests.post(single_predict_url, json=payload)
+            # Send a POST request to the FastAPI backend
+            try:
+                response = requests.post(single_predict_url, json=payload)
 
-            # Check if the request was successful
-            if response.status_code == 200:
-                result = response.json()
-                predicted_type = result.get("predicted_type")
-                probability = result.get("predicted_probability")
+                # Check if the request was successful
+                if response.status_code == 200:
+                    result = response.json()
+                    predicted_type = result.get("predicted_type")
+                    probability = result.get("predicted_probability")
 
-                # Create a dynamic container for the prediction results
-                with st.container():
-                    if probability >= 0.47:
-                        background_color = "rgba(76, 175, 80, 0.8)"  # Green for good predictions
-                        text_color = "white"
-                        message = "Predicted Star Type: " + predicted_type
-                    elif 0.27 <= probability < 0.47:
-                        background_color = "rgba(255, 235, 59, 0.8)"  # Yellow for okayish predictions
-                        text_color = "black"
-                        message = "Predicted Star Type: " + predicted_type
-                    else:
-                        background_color = "rgba(244, 67, 54, 0.8)"  # Red for low confidence predictions
-                        text_color = "white"
-                        message = "Predicted Star Type: " + predicted_type
+                    # Create a dynamic container for the prediction results
+                    with st.container():
+                        if probability >= 0.47:
+                            background_color = "rgba(76, 175, 80, 0.8)"  # Green for good predictions
+                            text_color = "white"
+                            message = "Predicted Star Type: " + predicted_type
+                        elif 0.27 <= probability < 0.47:
+                            background_color = "rgba(255, 235, 59, 0.8)"  # Yellow for okayish predictions
+                            text_color = "black"
+                            message = "Predicted Star Type: " + predicted_type
+                        else:
+                            background_color = "rgba(244, 67, 54, 0.8)"  # Red for low confidence predictions
+                            text_color = "white"
+                            message = "Predicted Star Type: " + predicted_type
 
-                    st.markdown(
-                        f"""
-                        <div style='background-color: {background_color}; padding: 10px 0px 1px 10px; border-radius: 10px;'>
-                            <p style='color: {text_color};'>{message}</p>
-                        </div>
-                        """, 
-                        unsafe_allow_html=True
-                    )
-                
-            else:
-                st.error(f"Error: Unable to get prediction. Status code {response.status_code}")
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+                        st.markdown(
+                            f"""
+                            <div style='background-color: {background_color}; padding: 10px 0px 1px 10px; border-radius: 10px;'>
+                                <p style='color: {text_color};'>{message}</p>
+                            </div>
+                            """, 
+                            unsafe_allow_html=True
+                        )
+                    
+                else:
+                    st.error(f"Error: Unable to get prediction. Status code {response.status_code}")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 
 
 # Display Bulk Prediction Page if selected
 elif page == "Bulk Prediction Mode":
+    st.markdown(footer, unsafe_allow_html=True)
     
     # Container with instructions in chocolate color and 0.8 opacity
     with st.container():
@@ -243,30 +253,25 @@ elif page == "Bulk Prediction Mode":
 
     # Automatically trigger bulk prediction when a file is uploaded
     if uploaded_file is not None:
-        try:
-            # Send the CSV file to the FastAPI bulk_predict endpoint
-            response = requests.post(
-                bulk_predict_url,
-                files={"file": uploaded_file.getvalue()}
-            )
+        with st.spinner('It may take a while if the app was idle for more than 15 mins...'):
+            try:
+                # Send the CSV file to the FastAPI bulk_predict endpoint
+                response = requests.post(
+                    bulk_predict_url,
+                    files={"file": uploaded_file.getvalue()}
+                )
 
-            # Check if the request was successful
-            if response.status_code == 200:
-                # Convert response to a DataFrame and display results
-                output_df = pd.read_csv(StringIO(response.content.decode('utf-8')))
-                st.markdown("<h4 style='color:red;'>Predicted Results:-</h4>", unsafe_allow_html=True)
-                st.dataframe(output_df)
-            else:
-                st.error(f"Error: Unable to get predictions. Status code {response.status_code}")
-        except Exception as e:
-            st.error(f"An error occurred: {str(e)}")
+                # Check if the request was successful
+                if response.status_code == 200:
+                    # Convert response to a DataFrame and display results
+                    output_df = pd.read_csv(StringIO(response.content.decode('utf-8')))
+                    st.markdown("<h4 style='color:red;'>Predicted Results:-</h4>", unsafe_allow_html=True)
+                    st.dataframe(output_df)
+                else:
+                    st.error(f"Error: Unable to get predictions. Status code {response.status_code}")
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 
-# Add the footer at the end of the script
-footer = """
-<div style='position: fixed; left: 0; bottom: 0; width: 100%; background-color: white; text-align: center; padding: 10px;'>
-    <p style='color: black; margin: 0;'>This project is developed by <b>Spartificial</b> as part of the <b>Machine Learning for Astronomy</b> Training Program</p>
-</div>
-"""
 
 # Inject the footer using markdown
 st.markdown(footer, unsafe_allow_html=True)
